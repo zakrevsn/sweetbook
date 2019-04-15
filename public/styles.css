@@ -1,0 +1,20 @@
+body {
+    background-color: aqua;
+    font-style: italic;
+}
+img {
+    width: 250px;
+    height: 250px;
+}
+li {
+    list-style: none;
+    width: 250px;
+    display: block;
+    border: black 1px dashed;
+    margin: 10px;
+}
+ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

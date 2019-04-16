@@ -6,6 +6,13 @@
 </head>
 <body>
     <div id="main">
+
+            <input v-model = 'form.title' name= 'title' type= 'text' placeholder = 'image title'>
+            <input v-model = 'form.description' name= 'description' type= 'text' placeholder = 'image'>
+            <input v-model = 'form.username' name= 'username' type= 'text' placeholder = 'image username'>
+            <input name= 'file' type= 'file' accept="image/*" @change = "handleFileChange">
+            <button @click.stop.prevent = 'uploadFile'>upload</button>
+    
         <h1>My Imageboard</h1>
         <ul v-if="images.length">
             <li @click="click(image.name)" v-for="image in images">

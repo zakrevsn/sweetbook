@@ -16,3 +16,15 @@ exports.addImage = function addImage(url, username, title, description) {
     let params = [url, username, title, description];
     return db.query(q, params);
 };
+
+exports.addComment = function addComment(imageId, username, comment) {
+    let q = `INSERT INTO comments(image_id, username, comment)
+             VALUES ($1, $2, $3) RETURNING *`;
+    let params = [imageId, username, comment];
+    return db.query(q, params);
+};
+exports.getComments = function getComments(imageId) {
+    let q = `SELECT * FROM comments WHERE image_id = $1 ORDER BY id DESC `;
+    let params = [imageId];
+    return db.query(q, params);
+};

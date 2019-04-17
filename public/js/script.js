@@ -32,6 +32,7 @@
                 this.form.file = e.target.files[0];
             },
             uploadFile: function() {
+                var self = this;
                 // formData(browser api) is used to send FILES to server!
                 var formData = new FormData();
                 formData.append("file", this.form.file);
@@ -43,7 +44,7 @@
 
                 axios.post("/upload", formData).then(function(res) {
                     console.log("then of POST/upload");
-                    self.images = res + self.images;
+                    self.images.unshift(res.data[0]);
                 });
             }
         }

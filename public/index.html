@@ -10,9 +10,9 @@
             <input v-model = 'form.title' name= 'title' type= 'text' placeholder = 'image title'>
             <input v-model = 'form.description' name= 'description' type= 'text' placeholder = 'image'>
             <input v-model = 'form.username' name= 'username' type= 'text' placeholder = 'image username'>
-            <input name= 'file' type= 'file' accept="image/*" @change = "handleFileChange">
+            <input name= 'file' type= 'file' placeholder = 'choose file' accept="image/*" @change = "handleFileChange">
             <button @click.stop.prevent = 'uploadFile'>upload</button>
-    
+
         <h1>My Imageboard</h1>
         <ul v-if="images.length">
             <li @click="click(image.name)" v-for="image in images">
@@ -21,9 +21,27 @@
             </li>
         </ul>
     </div>
+    <script id="image-popup" type="text/x-template">
+        <div class="popup">
+            <img :src="url"><br>
+            <h1 class="title">{{title}}</h1>
+            <p class="description">{{description}}</p>
+            <p class="info">Uploaded by {{username}} on {{timestamp}}</p>
+            <h2 class="add">Add comment</h2>
+            <input v-model='form.username' name='username' type='text' placeholder='username'>
+            <input v-model='form.comment' name='comment' type='text' placeholder='comment'>
+            <table v-if="comments.length">
+                <tr v-for="comment in comments">
+                    <td>by {{username}} on {{timestamp}}</td>
+                    <td>{{comment}}</td>
+                </tr>
+            </table>
+        </div>
+    </script>
+
     <script src="/js/vue.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/image-popup.js"></script>
 </body>
 </html>

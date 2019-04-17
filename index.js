@@ -29,11 +29,16 @@ var uploader = multer({
 app.use(require("body-parser").json());
 app.use(express.static("./public"));
 
+//upload images
 app.get("/images", (req, res) => {
     // https://expressjs.com/en/4x/api.html#res.json
-    db.getImages().then(results => {
-        res.json(results.rows);
-    });
+    db.getImages()
+        .then(results => {
+            res.json(results.rows);
+        })
+        .catch(() => {
+            res.sendStatus(500);
+        });
 });
 
 app.post("/upload", [uploader.single("file"), s3.upload], function(req, res) {
@@ -45,6 +50,25 @@ app.post("/upload", [uploader.single("file"), s3.upload], function(req, res) {
         req.body.title,
         req.body.description
     )
+        .then(results => {
+            res.json(results.rows);
+        })
+        .catch(() => {
+            res.sendStatus(500);
+        });
+});
+// open image and get comments
+app.get("/comments/:imageId", (req, res) => {
+    db.getComments(req.params.imageId)
+        .then(results => {
+            res.json(results.rows);
+        })
+        .catch(() => {
+            res.sendStatus(500);
+        });
+});
+app.post("/comments/:imageId", (req, res) => {
+    db.addComment(req.params.imageId, req.body.username, req.body.comment)
         .then(results => {
             res.json(results.rows);
         })

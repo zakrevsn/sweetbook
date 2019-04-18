@@ -14,28 +14,46 @@
             <button @click.stop.prevent = 'uploadFile'>upload</button>
 
         <h1>My Imageboard</h1>
+
         <ul v-if="images.length">
-            <li @click="click(image.name)" v-for="image in images">
+            <li @click="click(image)" v-for="image in images">
+
+                <!-- <image-popup v-if="imageId" :id="imageId">
+
+                </image-popup> -->
+
                 <img :src="image.url"><br>
                 {{image.title}}
             </li>
         </ul>
+        <image-popup v-if="selectedImage"
+                     v-bind:image-id="selectedImage.id"
+                     v-bind:url="selectedImage.url"
+                     v-bind:username="selectedImage.username"
+                     v-bind:title="selectedImage.title"
+                     v-bind:description="selectedImage.description"
+                     v-bind:created_at="selectedImage.created_at">
+        </image-popup>
     </div>
     <script id="image-popup" type="text/x-template">
         <div class="popup">
-            <img :src="url"><br>
-            <h1 class="title">{{title}}</h1>
-            <p class="description">{{description}}</p>
-            <p class="info">Uploaded by {{username}} on {{timestamp}}</p>
-            <h2 class="add">Add comment</h2>
-            <input v-model='form.username' name='username' type='text' placeholder='username'>
-            <input v-model='form.comment' name='comment' type='text' placeholder='comment'>
-            <table v-if="comments.length">
-                <tr v-for="comment in comments">
-                    <td>by {{username}} on {{timestamp}}</td>
-                    <td>{{comment}}</td>
-                </tr>
-            </table>
+            <div class="popup-content">
+                <div class="popup-x">X</div>
+                <img :src="url"><br>
+                <h1 class="title">{{title}}</h1>
+                <p class="description">{{description}}</p>
+                <p class="info">Uploaded by {{username}} on {{created_at}}</p>
+                <h2 class="add">Add comment</h2>
+                <input v-model='form.username' name='username' type='text' placeholder='username'>
+                <input v-model='form.comment' name='comment' type='text' placeholder='comment'>
+                <button @click="addComment(form.username, form.comment)" type="submit">Submit</button>
+                <table v-if="comments.length">
+                    <tr v-for="comment in comments">
+                        <td>by {{comment.username}} on {{comment.timestamp}}</td>
+                        <td>{{comment.comment}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </script>
 

@@ -62,8 +62,10 @@ app.get("/comments/:imageId", (req, res) => {
     db.getComments(req.params.imageId)
         .then(results => {
             res.json(results.rows);
+            console.log(results.rows);
         })
-        .catch(() => {
+        .catch(err => {
+            console.log(err);
             res.sendStatus(500);
         });
 });
@@ -72,7 +74,9 @@ app.post("/comments/:imageId", (req, res) => {
         .then(results => {
             res.json(results.rows);
         })
-        .catch(() => {
+        .catch(results => {
+            console.log(results);
+
             res.sendStatus(500);
         });
 });

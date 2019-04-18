@@ -72,3 +72,28 @@ ul {
     flex-direction: row;
     flex-wrap: wrap;
 }
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: white; */
+}
+
+.popup-content {
+    position: absolute;
+    margin: 50px;
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+.popup-x {
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+}

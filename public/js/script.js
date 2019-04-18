@@ -8,7 +8,8 @@
                 description: "",
                 username: "",
                 file: null
-            }
+            },
+            selectedImage: null
         },
         created: function() {
             console.log("created");
@@ -17,7 +18,7 @@
             var self = this;
             // in the nested scope this is loosing it's meaning
             console.log("mounted");
-            axios.get("/images").then(res => {
+            axios.get("/images").then(function(res) {
                 self.images = res.data;
             });
         },
@@ -38,7 +39,7 @@
                 formData.append("file", this.form.file);
                 formData.append("username", this.form.username);
                 formData.append("title", this.form.title);
-                formData.append("dscription", this.form.description);
+                formData.append("description", this.form.description);
                 // logging formData gives you an empty object, that's ok, it's working;
                 console.log("formData", formData);
 
@@ -46,6 +47,12 @@
                     console.log("then of POST/upload");
                     self.images.unshift(res.data[0]);
                 });
+            },
+            click: function(img) {
+                this.selectedImage = img;
+                // this.imageId = img;
+                // console.log(img);
+                // return img;
             }
         }
     });

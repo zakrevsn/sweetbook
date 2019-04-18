@@ -25,6 +25,12 @@ exports.addComment = function addComment(imageId, username, comment) {
 };
 exports.getComments = function getComments(imageId) {
     let q = `SELECT * FROM comments WHERE image_id = $1 ORDER BY id DESC `;
-    let params = [imageId];
+    let params = [+imageId || null];
     return db.query(q, params);
 };
+
+// exports.getImage = function getImage(id) {
+//     let q = `SELECT * FROM images WHERE id=$1 `;
+//     let params = [id];
+//     return db.query(q, params);
+// };

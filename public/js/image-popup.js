@@ -2,26 +2,29 @@ Vue.component("image-popup", {
     template: "#image-popup",
     data: function() {
         return {
-            id: null,
-            url: null,
-            username: null,
-            title: null,
-            description: null,
-            created_at: null,
+            // imageId: "",
+            // url: "",
+            // username: "",
+            // title: "",
+            // description: "",
+            // timestamp: "",
             comments: [],
             form: {
                 username: "",
-                comment: null
+                comment: ""
             }
         };
     },
     mounted: function() {
         var self = this;
-        axios.get("/comments/" + this.id).then(res => {
+        // axios.get("/images/" + this.id).then(function(res) {
+        axios.get("/comments/" + this.imageId).then(function(res) {
+            console.log(res);
             self.comments = res.data;
         });
     },
-    props: ["id", "url", "username", "title", "description", "created_at"],
+    props: ["imageId", "url", "username", "title", "description", "created_at"],
+
     methods: {
         // click: function() {
         //     this.name = this.funky;
@@ -32,9 +35,11 @@ Vue.component("image-popup", {
             let formData = new FormData();
             formData.append("comment", comment);
             formData.append("username", username);
-            axios.post("/comments/" + this.id, formData).then(res => {
-                self.comments.unshift(res.data[0]);
-            });
+            axios
+                .post("/comments/" + this.imageId, { username, comment })
+                .then(function(res) {
+                    self.comments.unshift(res.data[0]);
+                });
         }
     }
 });

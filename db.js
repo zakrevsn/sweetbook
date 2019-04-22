@@ -6,7 +6,7 @@ var dbUrl =
 var db = spicedPg(dbUrl);
 
 exports.getImages = function getImages() {
-    let q = `SELECT * FROM images ORDER BY id DESC `;
+    let q = `SELECT *, min(id) OVER () FROM images ORDER BY id DESC LIMIT 5 `;
     return db.query(q);
 };
 
@@ -28,9 +28,11 @@ exports.getComments = function getComments(imageId) {
     let params = [+imageId || null];
     return db.query(q, params);
 };
-
-// exports.getImage = function getImage(id) {
-//     let q = `SELECT * FROM images WHERE id=$1 `;
-//     let params = [id];
-//     return db.query(q, params);
-// };
+exports.getMoreImages = lastId =>
+    db.query(
+        `SELECT *, min(id) OVER () FROM images
+            WHERE id < $1
+            ORDER BY id DESC
+            LIMIT 5`,
+        [lastId]
+    );

@@ -54,18 +54,38 @@ body {
         );
     font-style: italic;
 }
+body.noScroll {
+    overflow: hidden;
+}
+h1.picname {
+    display: block;
+    font-size: 30px;
+}
 img {
     width: 250px;
     height: 250px;
     border-radius: 50%;
+    border: 5px solid darkgrey;
+}
+.plate {
+    background-color: beige;
+    border-radius: 50%;
+    padding: 40px;
+}
+.picname {
+    font-size: 20px;
+    display: inline-block;
+    padding: 4px;
+    background-color: beige;
+    border: dotted green 3px;
+    border-radius: 15px;
 }
 li {
     list-style: none;
-    width: 250px;
+    width: 340px;
     display: block;
-    border: black 1px dashed;
-    background-color: white;
     margin: 10px;
+    text-align: center;
 }
 ul {
     display: flex;
@@ -91,9 +111,34 @@ ul {
     padding: 15px;
     border-radius: 10px;
     text-align: center;
+    overflow-y: scroll;
 }
 .popup-x {
-    width: 100%;
+    display: fixed;
+    top: 5px;
+    right: 5px;
+    /* width: 100%; */
     text-align: right;
     cursor: pointer;
+}
+@media screen and (max-width: 480px) {
+    input {
+        display: block;
+        width: 90%;
+    }
+    body {
+        padding: 0px;
+    }
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        margin: 0;
+        margin-top: 10px;
+    }
+    .popup-content {
+        width: auto;
+        margin: 0;
+    }
 }

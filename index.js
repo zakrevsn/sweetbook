@@ -31,14 +31,26 @@ app.use(express.static("./public"));
 
 //upload images
 app.get("/images", (req, res) => {
-    // https://expressjs.com/en/4x/api.html#res.json
-    db.getImages()
-        .then(results => {
-            res.json(results.rows);
-        })
-        .catch(() => {
-            res.sendStatus(500);
-        });
+    if (!req.query.lastId) {
+        // https://expressjs.com/en/4x/api.html#res.json
+        db.getImages()
+            .then(results => {
+                res.json(results.rows);
+            })
+            .catch(results => {
+                res.sendStatus(500);
+                console.log(results);
+            });
+    } else {
+        db.getMoreImages(req.query.lastId)
+            .then(results => {
+                res.json(results.rows);
+            })
+            .catch(results => {
+                res.sendStatus(500);
+                console.log(results);
+            });
+    }
 });
 
 app.post("/upload", [uploader.single("file"), s3.upload], function(req, res) {

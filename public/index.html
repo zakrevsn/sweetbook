@@ -3,6 +3,8 @@
 <head>
     <title>My Cool Image Board</title>
     <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <div id="main">
@@ -13,20 +15,21 @@
             <input name= 'file' type= 'file' placeholder = 'choose file' accept="image/*" @change = "handleFileChange">
             <button @click.stop.prevent = 'uploadFile'>upload</button>
 
-        <h1>My Imageboard</h1>
+        <h1 class="picname">My Sweetbook</h1>
 
         <ul v-if="images.length">
             <li @click="click(image)" v-for="image in images">
 
-                <!-- <image-popup v-if="imageId" :id="imageId">
+                <div class="plate">
+                    <img :src="image.url">
+                </div>
 
-                </image-popup> -->
-
-                <img :src="image.url"><br>
-                {{image.title}}
+                <p class="picname">{{image.title}}</p>
             </li>
         </ul>
-        <image-popup v-if="selectedImage"
+        <button class="more" @click="showMore()"
+         v-if="haveMore()">MORE</button>
+        <image-popup v-if="selectedImage" @close="closePopup()"
                      v-bind:image-id="selectedImage.id"
                      v-bind:url="selectedImage.url"
                      v-bind:username="selectedImage.username"
@@ -36,9 +39,9 @@
         </image-popup>
     </div>
     <script id="image-popup" type="text/x-template">
-        <div class="popup">
-            <div class="popup-content">
-                <div class="popup-x">X</div>
+        <div class="popup" @click="$emit('close')" @scroll.stop="">
+            <div class="popup-content" @click.stop="">
+                <div class="popup-x" @click="$emit('close')">X</div>
                 <img :src="url"><br>
                 <h1 class="title">{{title}}</h1>
                 <p class="description">{{description}}</p>

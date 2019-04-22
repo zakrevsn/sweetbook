@@ -32,6 +32,10 @@
                 // this stores the file that was just selected in the 'file' property of data object;
                 this.form.file = e.target.files[0];
             },
+            closePopup: function() {
+                this.selectedImage = null;
+                document.body.classList.remove("noScroll");
+            },
             uploadFile: function() {
                 var self = this;
                 // formData(browser api) is used to send FILES to server!
@@ -50,9 +54,28 @@
             },
             click: function(img) {
                 this.selectedImage = img;
-                // this.imageId = img;
-                // console.log(img);
-                // return img;
+            },
+            showMore: function() {
+                console.log("showMore");
+                var self = this;
+                let lastId = null;
+                if (!this.images.length) {
+                    return;
+                }
+                lastId = this.images[this.images.length - 1].id;
+                axios
+                    .get("/images", { params: { lastId } })
+                    .then(function(res) {
+                        console.log(res);
+                        self.images = self.images.concat(res.data);
+                    });
+            },
+            haveMore: function() {
+                return (
+                    this.images.length > 0 &&
+                    this.images[this.images.length - 1].id >
+                        this.images[this.images.length - 1].min
+                );
             }
         }
     });

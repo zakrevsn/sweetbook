@@ -22,6 +22,7 @@ Vue.component("image-popup", {
             console.log(res);
             self.comments = res.data;
         });
+        document.body.classList.add("noScroll");
     },
     props: ["imageId", "url", "username", "title", "description", "created_at"],
 
